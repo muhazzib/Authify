@@ -1,13 +1,13 @@
 import React from 'react';
 import { StyleSheet, TextInputProps, View } from 'react-native';
 
-const Card = ({ children, ...props }: TextInputProps) => (
-    <View style={styles.card} {...props}>
+const Card = ({ children, styles, ...props }: TextInputProps) => (
+    <View style={[defaultStyles.card, styles]} {...props}>
         {children}
     </View>
 );
 
-const styles = StyleSheet.create({
+const defaultStyles = StyleSheet.create({
     card: {
         backgroundColor: '#fff',
         borderRadius: 10,
