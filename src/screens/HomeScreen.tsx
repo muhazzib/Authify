@@ -1,32 +1,22 @@
 import React, { useContext } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
-import Card from '../../components/Card';
-import UserContext from '../../store/context/UserContext';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import Card from '../components/Card';
+import UserContext from '../store/context/UserContext';
 
 const HomeScreen = () => {
-const { state, logout } = useContext(UserContext);
+  const { state, logout } = useContext(UserContext);
 
-return (
+  return (
     <View style={styles.container}>
       <Card styles={styles.card}>
         <View style={styles.avatar}>
-          <Text style={styles.avatarText}>
-            {state.user?.name?.charAt(0)}
-          </Text>
+          <Text style={styles.avatarText}>{state.user?.name?.charAt(0)}</Text>
         </View>
 
         <Text style={styles.name}>{state.user?.name}</Text>
         <Text style={styles.email}>{state.user?.email}</Text>
 
-        <TouchableOpacity
-          style={styles.logoutButton}
-          onPress={() => logout()}
-        >
+        <TouchableOpacity style={styles.logoutButton} onPress={() => logout()}>
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
       </Card>

@@ -5,36 +5,34 @@ import {
   TouchableOpacity,
   StyleSheet,
   KeyboardAvoidingView,
-  Keyboard
+  Keyboard,
 } from 'react-native';
 import { useForm } from 'react-hook-form';
-import Card from '../../components/Card';
-import FormInput from '../../components/FormInput';
-import UserContext from '../../store/context/UserContext';
-import Button from '../../components/Button';
-import { SignupScreenProps } from '../../types/interfaces';
+import Card from '../components/Card';
+import FormInput from '../components/FormInput';
+import UserContext from '../store/context/UserContext';
+import Button from '../components/Button';
+import { SignupScreenProps } from '../types/interfaces';
 
 const SignupScreen = ({ navigation }: SignupScreenProps) => {
-  const {
-    control,
-    handleSubmit,
-  } = useForm();
+  const { control, handleSubmit } = useForm();
 
   const { state, signup } = useContext(UserContext);
 
-  const handleSignup = useCallback((data: any) => {
-    Keyboard.dismiss();
-    signup(data);
-  }, [signup]);
+  const handleSignup = useCallback(
+    (data: any) => {
+      Keyboard.dismiss();
+      signup(data);
+    },
+    [signup],
+  );
 
   const onPressButton = useCallback(() => {
     handleSubmit(handleSignup)();
   }, [handleSubmit, handleSignup]);
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-    >
+    <KeyboardAvoidingView style={styles.container}>
       <Card>
         <Text style={styles.title}>Create Account</Text>
         <FormInput
@@ -72,7 +70,11 @@ const SignupScreen = ({ navigation }: SignupScreenProps) => {
           secureTextEntry
         />
 
-        <Button handleSubmit={onPressButton} text="Sign Up" loading={state.loading}/>
+        <Button
+          handleSubmit={onPressButton}
+          text="Sign Up"
+          loading={state.loading}
+        />
 
         <View style={styles.loginContainer}>
           <Text style={styles.loginText}>Already have an account ?</Text>

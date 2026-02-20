@@ -2,8 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { USER_KEY, USERS_KEY } from '../constants';
 
 type User = {
-    name: string;
-    email: string;
+  name: string;
+  email: string;
 };
 
 export const saveUserToAsyncStorage = async (user: User) => {

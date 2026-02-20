@@ -17,7 +17,7 @@ interface FormInputProps<T extends FieldValues> {
   placeholder: string;
   secureTextEntry?: boolean;
   keyboardType?: KeyboardTypeOptions;
-};
+}
 
 const FormInput = <T extends FieldValues>({
   name,
@@ -46,6 +46,6 @@ const FormInput = <T extends FieldValues>({
       )}
     />
   );
-}
+};
 
 export default React.memo(FormInput);

@@ -1,17 +1,18 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ParamListBase } from '@react-navigation/native';
 
-interface SignupScreenNavigationProp extends NativeStackNavigationProp<ParamListBase, 'Signup'> {}
-interface LoginScreenNavigationProp extends NativeStackNavigationProp<ParamListBase, 'Login'> {}
+interface SignupScreenNavigationProp
+  extends NativeStackNavigationProp<ParamListBase, 'Signup'> {}
+interface LoginScreenNavigationProp
+  extends NativeStackNavigationProp<ParamListBase, 'Login'> {}
 
 export interface SignupScreenProps {
   navigation: SignupScreenNavigationProp;
-};
+}
 
 export interface LoginScreenProps {
   navigation: LoginScreenNavigationProp;
-};
-
+}
 
 export interface User {
   name: string;

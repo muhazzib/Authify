@@ -4,8 +4,7 @@ import errorStyles from '../styles/ErrorMessage.styles';
 
 interface ErrorMessageProps {
   message?: string | null;
-};
-
+}
 
 const ErrorMessage = ({ message }: ErrorMessageProps) => {
   const slideAnim = useRef(new Animated.Value(-80)).current;

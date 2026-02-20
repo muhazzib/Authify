@@ -5,37 +5,34 @@ import {
   TouchableOpacity,
   StyleSheet,
   KeyboardAvoidingView,
-  Keyboard
+  Keyboard,
 } from 'react-native';
 import { useForm } from 'react-hook-form';
-import Card from '../../components/Card';
-import FormInput from '../../components/FormInput';
-import UserContext from '../../store/context/UserContext';
-import Button from '../../components/Button';
-import { LoginScreenProps } from '../../types/interfaces';
+import Card from '../components/Card';
+import FormInput from '../components/FormInput';
+import UserContext from '../store/context/UserContext';
+import Button from '../components/Button';
+import { LoginScreenProps } from '../types/interfaces';
 
 const LoginScreen = ({ navigation }: LoginScreenProps) => {
-  const {
-    control,
-    handleSubmit,
-  } = useForm();
+  const { control, handleSubmit } = useForm();
 
   const { state, login } = useContext(UserContext);
 
-
-  const handleLogin = useCallback((data: any) => {
-    Keyboard.dismiss();
-    login(data);
-  }, [login]);
+  const handleLogin = useCallback(
+    (data: any) => {
+      Keyboard.dismiss();
+      login(data);
+    },
+    [login],
+  );
 
   const onPressButton = useCallback(() => {
     handleSubmit(handleLogin)();
   }, [handleSubmit, handleLogin]);
-  
+
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-    >
+    <KeyboardAvoidingView style={styles.container}>
       <Card>
         <Text style={styles.title}>Login</Text>
         <FormInput
@@ -66,7 +63,11 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
           secureTextEntry
         />
 
-        <Button handleSubmit={onPressButton} text="Login" loading={state.loading} />
+        <Button
+          handleSubmit={onPressButton}
+          text="Login"
+          loading={state.loading}
+        />
 
         <View style={styles.loginContainer}>
           <Text style={styles.loginText}>Don't have an account ?</Text>

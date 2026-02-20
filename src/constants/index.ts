@@ -1,14 +1,14 @@
-import { State } from "../types/interfaces";
+import { State } from '../types/interfaces';
 
 export const USER_KEY = 'loggedInUser';
 export const USERS_KEY = 'usersList';
 
 export const INITIAL_STATE: State = {
-    user: null,
-    users: [],
-    loading: false,
-    error: null,
-    initialLoading: true,
+  user: null,
+  users: [],
+  loading: false,
+  error: null,
+  initialLoading: true,
 };
 
 export const REDUCER_TYPES = {
