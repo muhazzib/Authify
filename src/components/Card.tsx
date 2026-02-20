@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, TextInputProps, View } from 'react-native';
+import cardStyles from '../styles/Card.styles';
 
 interface CardProps {
   children: React.ReactNode;
@@ -8,21 +9,9 @@ interface CardProps {
 }
 
 const Card = ({ children, styles, ...props }: CardProps) => (
-  <View style={[defaultStyles.card, styles]} {...props}>
+  <View style={[cardStyles.card, styles]} {...props}>
     {children}
   </View>
 );
-
-const defaultStyles = StyleSheet.create({
-  card: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 25,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 5,
-  },
-});
 
 export default React.memo(Card);

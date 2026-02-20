@@ -23,9 +23,6 @@ const errorStyles = StyleSheet.create({
     elevation: 4,
     zIndex: 100,
   },
-  icon: {
-    marginRight: 10,
-  },
   text: {
     color: '#b91c1c',
     fontSize: 15,
