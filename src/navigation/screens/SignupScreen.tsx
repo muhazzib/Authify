@@ -1,23 +1,35 @@
-import React from 'react';
+import React, { useCallback, useContext } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
   KeyboardAvoidingView,
+  Keyboard
 } from 'react-native';
 import { useForm } from 'react-hook-form';
-import Card from '../components/Card';
-import FormInput from '../components/FormInput';
+import Card from '../../components/Card';
+import FormInput from '../../components/FormInput';
+import UserContext from '../../store/context/UserContext';
+import Button from '../../components/Button';
+import { SignupScreenProps } from '../../types/interfaces';
 
-const SignupScreen = ({ navigation }) => {
+const SignupScreen = ({ navigation }: SignupScreenProps) => {
   const {
     control,
     handleSubmit,
   } = useForm();
 
-  const handleSignup = () => {
-  };
+  const { state, signup } = useContext(UserContext);
+
+  const handleSignup = useCallback((data: any) => {
+    Keyboard.dismiss();
+    signup(data);
+  }, [signup]);
+
+  const onPressButton = useCallback(() => {
+    handleSubmit(handleSignup)();
+  }, [handleSubmit, handleSignup]);
 
   return (
     <KeyboardAvoidingView
@@ -60,9 +72,7 @@ const SignupScreen = ({ navigation }) => {
           secureTextEntry
         />
 
-        <TouchableOpacity style={styles.button} onPress={handleSubmit(handleSignup)}>
-          <Text style={styles.buttonText}>Sign Up</Text>
-        </TouchableOpacity>
+        <Button handleSubmit={onPressButton} text="Sign Up" loading={state.loading}/>
 
         <View style={styles.loginContainer}>
           <Text style={styles.loginText}>Already have an account ?</Text>
@@ -118,4 +128,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignupScreen;
+export default React.memo(SignupScreen);

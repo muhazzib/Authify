@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, KeyboardTypeOptions } from 'react-native';
+import { View, Text, KeyboardTypeOptions } from 'react-native';
 import {
   Controller,
   Control,
@@ -8,8 +8,9 @@ import {
   RegisterOptions,
 } from 'react-hook-form';
 import InputField from './InputField';
+import formInputStyles from '../styles/FormInput.styles';
 
-type FormInputProps<T extends FieldValues> = {
+interface FormInputProps<T extends FieldValues> {
   name: Path<T>;
   control: Control<T>;
   rules?: RegisterOptions<T>;
@@ -18,21 +19,21 @@ type FormInputProps<T extends FieldValues> = {
   keyboardType?: KeyboardTypeOptions;
 };
 
-function FormInput<T extends FieldValues>({
+const FormInput = <T extends FieldValues>({
   name,
   control,
   rules,
   placeholder,
   secureTextEntry,
   keyboardType,
-}: FormInputProps<T>) {
+}: FormInputProps<T>) => {
   return (
     <Controller
       control={control}
       name={name}
       rules={rules}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
-        <View style={styles.container}>
+        <View style={formInputStyles.container}>
           <InputField
             placeholder={placeholder}
             value={value}
@@ -40,22 +41,11 @@ function FormInput<T extends FieldValues>({
             secureTextEntry={secureTextEntry}
             keyboardType={keyboardType}
           />
-          {error && <Text style={styles.error}>{error.message}</Text>}
+          {error && <Text style={formInputStyles.error}>{error.message}</Text>}
         </View>
       )}
     />
   );
 }
 
-export default FormInput;
-
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 15,
-  },
-  error: {
-    color: 'red',
-    fontSize: 12,
-    marginTop: 5,
-  },
-});
+export default React.memo(FormInput);

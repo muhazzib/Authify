@@ -1,7 +1,13 @@
 import React from 'react';
 import { StyleSheet, TextInputProps, View } from 'react-native';
 
-const Card = ({ children, styles, ...props }: TextInputProps) => (
+interface CardProps {
+    children: React.ReactNode;
+    styles?: object;
+    props?: TextInputProps
+}
+
+const Card = ({ children, styles, ...props }: CardProps) => (
     <View style={[defaultStyles.card, styles]} {...props}>
         {children}
     </View>
@@ -19,4 +25,4 @@ const defaultStyles = StyleSheet.create({
     }
 });
 
-export default Card;
+export default React.memo(Card);

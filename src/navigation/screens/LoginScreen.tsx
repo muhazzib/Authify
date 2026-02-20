@@ -1,24 +1,37 @@
-import React from 'react';
+import React, { useCallback, useContext } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
   KeyboardAvoidingView,
+  Keyboard
 } from 'react-native';
 import { useForm } from 'react-hook-form';
-import Card from '../components/Card';
-import FormInput from '../components/FormInput';
+import Card from '../../components/Card';
+import FormInput from '../../components/FormInput';
+import UserContext from '../../store/context/UserContext';
+import Button from '../../components/Button';
+import { LoginScreenProps } from '../../types/interfaces';
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({ navigation }: LoginScreenProps) => {
   const {
     control,
     handleSubmit,
   } = useForm();
 
-  const handleLogin = () => {
-  };
+  const { state, login } = useContext(UserContext);
 
+
+  const handleLogin = useCallback((data: any) => {
+    Keyboard.dismiss();
+    login(data);
+  }, [login]);
+
+  const onPressButton = useCallback(() => {
+    handleSubmit(handleLogin)();
+  }, [handleSubmit, handleLogin]);
+  
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -53,9 +66,7 @@ const LoginScreen = ({ navigation }) => {
           secureTextEntry
         />
 
-        <TouchableOpacity style={styles.button} onPress={handleSubmit(handleLogin)}>
-          <Text style={styles.buttonText}>Sign Up</Text>
-        </TouchableOpacity>
+        <Button handleSubmit={onPressButton} text="Login" loading={state.loading} />
 
         <View style={styles.loginContainer}>
           <Text style={styles.loginText}>Don't have an account ?</Text>
@@ -81,17 +92,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
   },
-  button: {
-    backgroundColor: '#4f46e5',
-    padding: 15,
-    borderRadius: 2,
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
   loginContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -111,4 +111,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default React.memo(LoginScreen);
