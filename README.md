@@ -1,97 +1,145 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# **Authify**
 
-# Getting Started
+Authify is a simple and secure authentication app built with React Native, featuring seamless login and signup functionality.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+---
 
-## Step 1: Start Metro
+## **Technical Overview**
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+### **Component Based Architecture**
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+Authify is built using a **component-based architecture**, where the UI is decomposed into smaller, reusable components to improve scalability and maintainability.
 
-```sh
-# Using npm
-npm start
+### 🔹 Key Architectural Decisions
 
-# OR using Yarn
-yarn start
+- ♻️ **Reusable UI Components** – Input fields, buttons, and form elements are separated into independent components for better reusability.  
+- 🧩 **Separation of Concerns** – Screens focus on layout and logic, while components handle presentation.  
+- 📂 **Organized Folder Structure** – Clear separation between `components`, `screens`, and `navigation`.  
+- 📈 **Scalability First Approach** – The structure makes it easy to extend with additional features.
+
+This approach ensures cleaner code, easier debugging, and improved long-term maintainability.
+
+## State Management
+
+Authify uses the **React Context API** combined with custom reducers to manage global state across the app. This modular approach keeps state predictable, avoids prop drilling, and makes the app scalable for future authentication features.
+
+- **context**: Provides shared authentication state (e.g., user session, login status) via React Context Providers.  
+- **reducer**: Defines pure functions to handle state updates based on dispatched authentication actions (login, logout, signup).
+
+
+## Form Validation
+
+Authify uses **React Hook Form** for efficient and scalable form handling and validation.
+
+- ⚡ **Performance Optimized** – Minimizes re-renders for better performance.  
+- 🧾 **Declarative Validation Rules** – Easily define required fields, email patterns, password rules, etc.  
+- 🚨 **Error Handling** – Displays user-friendly validation messages for invalid inputs.  
+- 🔄 **Controlled & Uncontrolled Inputs Support** – Flexible integration with custom input components.
+
+This ensures a smooth user experience with real-time validation and clean form management.
+
+## Persistent Authentication
+
+Authify implements **persistent authentication** using AsyncStorage to maintain user sessions across app restarts.
+
+- 🔐 **AsyncStorage Integration** – Stores authentication tokens or user session data locally.  
+- 🔄 **Session Restoration** – Restores authentication state when the app relaunches.  
+- 🚀 **Seamless User Experience** – Keeps users logged in even after closing the app.
+
+This ensures a smooth and uninterrupted authentication flow.
+
+## Navigation
+
+Authify uses **React Navigation** to handle seamless navigation between authentication screens.
+
+- 🔀 **Stack Navigation** – Manages transitions between Login and Signup screens.  
+- 🧠 **Authentication Flow Control** – Conditionally renders screens based on authentication state.  
+- 🎯 **Smooth Screen Transitions** – Provides a native-like navigation experience.  
+- 📱 **Scalable Structure** – Easily extendable for adding protected routes or additional screens.
+
+This ensures a clean and organized routing structure while maintaining a smooth user experience.
+
+## Project Structure
+
+Authify follows a **clean, modular, and scalable architecture** to ensure maintainability and reusability. The folder structure is organized by responsibility, making it easy to extend and manage as the application grows.
+
+```
+├── components # Reusable UI components (component-based architecture)
+├── constants # Application-wide constants and configuration
+├── hooks # Custom React hooks for shared logic
+├── navigation # Navigation setup and authentication flow routing
+├── screens # App screens (e.g., Login, Signup, Home)
+├── store # Global state management (Context API + reducers)
+├── styles # Centralized styling for components
+└── types # TypeScript types and interfaces
+
 ```
 
-## Step 2: Build and run your app
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+## Code Quality & Consistency
 
-### Android
+Authify maintains a clean, reliable, and consistent codebase using a combination of development tools:
 
-```sh
-# Using npm
-npm run android
+- **ESLint**: Performs static code analysis to enforce coding standards and catch potential errors.  
+- **Prettier**: Automatically formats code for a consistent style across the project.  
+- **TypeScript (tsc)**: Provides type safety by checking types during development.  
+- **Test Runner (e.g., Jest)**: Executes unit and integration tests to ensure functionality works as intended.  
 
-# OR using Yarn
-yarn android
-```
+These tools help ensure that all commits adhere to the project’s coding standards and maintain high-quality, maintainable code.
 
-### iOS
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+## Demo
 
-```sh
-bundle install
-```
+Here’s a quick overview of Authify’s main features in action.
+---
 
-Then, and every time you update your native dependencies, run:
+### 1️⃣ Form Validation
 
-```sh
-bundle exec pod install
-```
+Authify uses **React Hook Form** to handle all form inputs with proper validation.  
+The app handles the following scenarios:
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+- ❌ **Invalid Email/Password Format** – Shows error messages when the email or password does not meet the required format.  
+- ❌ **Missing Fields** – Prompts the user if any mandatory field (email, password, name) is left empty.  
+- ❌ **Password Length** – Enforces a minimum password length of 6 characters and shows validation errors if violated.  
+- 👁️ **Password Visibility Toggle** – Includes an eye icon in password fields to allow users to hide or show their password for better usability.
 
-```sh
-# Using npm
-npm run ios
+<img src="demo/form-validation.gif" width="200" alt="Login Demo" />
 
-# OR using Yarn
-yarn ios
-```
+---
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+### 2️⃣ Login Validation
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+The login flow is protected with proper validation and state management:
 
-## Step 3: Modify your app
+- ❌ **Incorrect Credentials** – Displays an error message if the entered email or password is invalid.  
+- ✅ **Happy Flow** – On successful login, the user is redirected to the Home screen where their **name** and **email** are displayed.  
 
-Now that you have successfully run the app, let's make changes!
+<img src="demo/login-validation.gif" width="200" alt="Login Demo" />
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+---
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+### 3️⃣ Signup Validation
 
-## Congratulations! :tada:
+The signup flow ensures smooth user registration with validation:
 
-You've successfully run and modified your React Native App. :partying_face:
+- ❌ **Existing Email** – Shows an error message if a user tries to register with an email that already exists in the system.  
+- ✅ **Happy Flow** – Successfully registers a new user and logs them in automatically or redirects them to the login screen.  
 
-### Now what?
+<img src="demo/signup-validation.gif" width="200" alt="Login Demo" />
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+---
 
-# Troubleshooting
+### 4️⃣ Persistent Authentication
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+Authify ensures users remain logged in across sessions using **AsyncStorage**:
 
-# Learn More
+- 🔄 **Session Persistence** – The user’s login state and session data are stored locally.  
+- ✅ **Seamless Experience** – After closing and reopening the app, the user remains logged in and is redirected to the Home screen automatically.  
 
-To learn more about React Native, take a look at the following resources:
+<img src="demo/persistent-auth.gif" width="200" alt="Login Demo" />
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+---
+
+This demo section highlights the key authentication flows, form validation, and session management that make Authify a smooth and user-friendly React Native app.
