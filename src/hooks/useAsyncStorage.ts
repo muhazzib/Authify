@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { USER_KEY, USERS_KEY } from '../constants';
 import { User } from '../types/interfaces';

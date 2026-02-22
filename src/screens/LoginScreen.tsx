@@ -67,6 +67,7 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
           handleSubmit={onPressButton}
           text="Login"
           loading={state.loading}
+          testID="login-button"
         />
 
         <View style={styles.loginContainer}>

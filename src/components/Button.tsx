@@ -6,13 +6,15 @@ interface ButtonProps {
   handleSubmit: () => void;
   text: string;
   loading: boolean;
+  testID?: string;
 }
 
-const Button = ({ handleSubmit, text, loading }: ButtonProps) => (
+const Button = ({ handleSubmit, text, loading, testID }: ButtonProps) => (
   <TouchableOpacity
     style={buttonStyles.button}
     onPress={handleSubmit}
     disabled={loading}
+    testID={testID}
   >
     <Text style={buttonStyles.buttonText}>{text}</Text>
   </TouchableOpacity>
