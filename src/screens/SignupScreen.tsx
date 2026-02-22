@@ -1,18 +1,13 @@
 import React, { useCallback, useContext } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  KeyboardAvoidingView,
-  Keyboard,
-} from 'react-native';
+import { Text, StyleSheet, KeyboardAvoidingView, Keyboard } from 'react-native';
 import { useForm } from 'react-hook-form';
 import Card from '../components/Card';
 import FormInput from '../components/FormInput';
 import UserContext from '../store/context/UserContext';
 import Button from '../components/Button';
+import AuthSwitch from '../components/AuthSwitch';
 import { SignupScreenProps } from '../types/interfaces';
+import { LOADING_TYPES } from '../constants';
 
 const SignupScreen = ({ navigation }: SignupScreenProps) => {
   const { control, handleSubmit } = useForm();
@@ -73,15 +68,14 @@ const SignupScreen = ({ navigation }: SignupScreenProps) => {
         <Button
           handleSubmit={onPressButton}
           text="Sign Up"
-          loading={state.loading}
+          loading={state.loading === LOADING_TYPES.SIGNUP}
         />
 
-        <View style={styles.loginContainer}>
-          <Text style={styles.loginText}>Already have an account ?</Text>
-          <TouchableOpacity onPress={() => navigation.replace('Login')}>
-            <Text style={styles.loginLink}> Login</Text>
-          </TouchableOpacity>
-        </View>
+        <AuthSwitch
+          prompt="Already have an account ?"
+          actionText="Login"
+          onPress={() => navigation.replace('Login')}
+        />
       </Card>
     </KeyboardAvoidingView>
   );
@@ -109,18 +103,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontWeight: 'bold',
-  },
-  loginContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 20,
-  },
-  loginText: {
-    color: '#777',
-  },
-  loginLink: {
-    color: '#4f46e5',
     fontWeight: 'bold',
   },
   error: {

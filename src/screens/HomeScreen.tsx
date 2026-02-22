@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import Card from '../components/Card';
 import UserContext from '../store/context/UserContext';
+import Button from '../components/Button';
+import { LOADING_TYPES } from '../constants';
 
 const HomeScreen = () => {
   const { state, logout } = useContext(UserContext);
@@ -15,10 +17,17 @@ const HomeScreen = () => {
 
         <Text style={styles.name}>{state.user?.name}</Text>
         <Text style={styles.email}>{state.user?.email}</Text>
-
-        <TouchableOpacity style={styles.logoutButton} onPress={() => logout()}>
-          <Text style={styles.logoutText}>Logout</Text>
-        </TouchableOpacity>
+        <Button
+          handleSubmit={() =>
+            Alert.alert('Logout', 'Are you sure you want to logout?', [
+              { text: 'Cancel', style: 'cancel' },
+              { text: 'Logout', onPress: logout, style: 'destructive' },
+            ])
+          }
+          text="Logout"
+          loading={state.loading === LOADING_TYPES.LOGOUT}
+          styles={styles.logoutButton}
+        />
       </Card>
     </View>
   );
@@ -58,13 +67,12 @@ const styles = StyleSheet.create({
   email: {
     fontSize: 14,
     color: '#777',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   logoutButton: {
     backgroundColor: '#ef4444',
-    paddingVertical: 12,
     paddingHorizontal: 40,
-    borderRadius: 10,
+    borderRadius: 2,
   },
   logoutText: {
     color: '#fff',

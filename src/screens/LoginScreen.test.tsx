@@ -8,7 +8,7 @@ const navigation = {
 } as any;
 
 const loginMock = jest.fn();
-const stateMock = { loading: false };
+const stateMock = { loading: null };
 
 const renderWithContext = () =>
   render(

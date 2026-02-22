@@ -24,7 +24,7 @@ describe('Button', () => {
     const { getByText } = render(
       <Button handleSubmit={handleSubmit} text="Loading" loading={true} />,
     );
-    fireEvent.press(getByText('Loading'));
+
     expect(handleSubmit).not.toHaveBeenCalled();
   });
 

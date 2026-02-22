@@ -27,7 +27,7 @@ export interface UserPayload {
 
 export interface State {
   user: User | null;
-  loading: boolean;
+  loading: string | null;
   users: User[];
   error: string | null;
   initialLoading: boolean;
@@ -37,7 +37,7 @@ export type Action =
   | { type: 'LOGIN'; payload: User; initialLoad?: boolean }
   | { type: 'SIGNUP'; payload: User }
   | { type: 'LOGOUT' }
-  | { type: 'SET_LOADING'; payload: boolean }
+  | { type: 'SET_LOADING'; payload: string | null }
   | { type: 'SET_ERROR'; payload: string | null }
   | { type: 'SET_USERS'; payload: User[] }
   | { type: 'SET_INITIAL_LOADING'; payload: boolean };

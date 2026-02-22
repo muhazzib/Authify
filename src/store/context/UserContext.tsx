@@ -2,7 +2,7 @@ import React, { createContext, useReducer, ReactNode } from 'react';
 import { useAsyncStorage } from '../../hooks/useAsyncStorage';
 import { User, UserContextType, UserPayload } from '../../types/interfaces';
 import reducer from '../reducer';
-import { INITIAL_STATE, REDUCER_TYPES } from '../../constants';
+import { INITIAL_STATE, LOADING_TYPES, REDUCER_TYPES } from '../../constants';
 
 const UserContext = createContext<UserContextType>({
   state: INITIAL_STATE,
@@ -14,10 +14,9 @@ const UserContext = createContext<UserContextType>({
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-  const { saveUser, saveUsers, getUser, getUsers, removeUser } =
-    useAsyncStorage();
+  const { saveUser, saveUsers, removeUser } = useAsyncStorage();
   const login = (user: UserPayload, initialLoad?: boolean) => {
-    dispatch({ type: REDUCER_TYPES.SET_LOADING, payload: true });
+    dispatch({ type: REDUCER_TYPES.SET_LOADING, payload: LOADING_TYPES.LOGIN });
     setTimeout(() => {
       const existingUser = state.users.find(u => u.email === user?.email);
       if (!existingUser || existingUser.password !== user.password) {
@@ -47,7 +46,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const signup = (user: User) => {
-    dispatch({ type: REDUCER_TYPES.SET_LOADING, payload: true });
+    dispatch({
+      type: REDUCER_TYPES.SET_LOADING,
+      payload: LOADING_TYPES.SIGNUP,
+    });
     setTimeout(() => {
       const existingUser = state.users.find(u => u.email === user.email);
       if (existingUser) {
@@ -69,12 +71,19 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
-    removeUser().then(() => {
-      dispatch({ type: REDUCER_TYPES.SET_LOADING, payload: true });
-      setTimeout(() => {
-        dispatch({ type: REDUCER_TYPES.LOGOUT });
-      }, 500);
-    });
+    try {
+      removeUser().then(() => {
+        dispatch({
+          type: REDUCER_TYPES.SET_LOADING,
+          payload: LOADING_TYPES.LOGOUT,
+        });
+        setTimeout(() => {
+          dispatch({ type: REDUCER_TYPES.LOGOUT });
+        }, 500);
+      });
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
   };
 
   const setUsers = (users: User[]) => {

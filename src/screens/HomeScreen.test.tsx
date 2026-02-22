@@ -2,12 +2,13 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import HomeScreen from './HomeScreen';
 import UserContext from '../store/context/UserContext';
+import { Alert } from 'react-native';
 
 const logoutMock = jest.fn();
 const stateMock = {
   user: { name: 'Test User', email: 'test@email.com' },
   users: [],
-  loading: false,
+  loading: null,
   error: null,
   initialLoading: false,
 };
@@ -30,6 +31,10 @@ const renderWithContext = () =>
 describe('HomeScreen', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.spyOn(Alert, 'alert').mockImplementation((_, __, buttons) => {
+      const logoutButton = buttons?.find(b => b.text === 'Logout');
+      if (logoutButton && logoutButton.onPress) logoutButton.onPress();
+    });
   });
 
   it('renders user info', () => {

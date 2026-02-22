@@ -25,7 +25,7 @@ const ErrorMessage = ({ message }: ErrorMessageProps) => {
         }),
       ]).start();
     }
-  }, [message]);
+  }, [message, slideAnim]);
 
   if (!message) return null;
 

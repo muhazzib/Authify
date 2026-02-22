@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 import buttonStyles from '../styles/Button.styles';
 
 interface ButtonProps {
@@ -7,16 +7,27 @@ interface ButtonProps {
   text: string;
   loading: boolean;
   testID?: string;
+  styles?: object;
 }
 
-const Button = ({ handleSubmit, text, loading, testID }: ButtonProps) => (
+const Button = ({
+  handleSubmit,
+  text,
+  loading,
+  testID,
+  styles,
+}: ButtonProps) => (
   <TouchableOpacity
-    style={buttonStyles.button}
+    style={[buttonStyles.button, styles]}
     onPress={handleSubmit}
     disabled={loading}
     testID={testID}
   >
-    <Text style={buttonStyles.buttonText}>{text}</Text>
+    {loading ? (
+      <ActivityIndicator color="#fff" />
+    ) : (
+      <Text style={buttonStyles.buttonText}>{text}</Text>
+    )}
   </TouchableOpacity>
 );
 
