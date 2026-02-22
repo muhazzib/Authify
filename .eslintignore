@@ -1,0 +1,28 @@
+# Ignore node modules
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.*
+
+# Coverage reports
+coverage/
+
+# Temporary files
+.tmp/
+temp/
+
+# Specific files or folders
+# public/
+# src/assets/
+
+# IDE settings
+.vscode/
+.idea/

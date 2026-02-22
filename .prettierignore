@@ -1,0 +1,41 @@
+# Ignore node modules
+node_modules/
+
+# Build output
+build/
+dist/
+
+# Coverage reports
+coverage/
+
+# Environment files
+.env
+.env.*
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Logs
+*.log
+
+# IDE settings
+.vscode/
+.idea/
+
+# Public/static assets
+public/
+static/
+
+# Ignore compiled files
+*.min.js
+*.min.css
+
+# React Native specific
+android/
+ios/
+
+# Generated or vendor files
+vendor/
+*.min.js
