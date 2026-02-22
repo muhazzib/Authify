@@ -85,6 +85,12 @@ Authify maintains a clean, reliable, and consistent codebase using a combination
 - **TypeScript (tsc)**: Provides type safety by checking types during development.  
 - **Test Runner (e.g., Jest)**: Executes unit and integration tests to ensure functionality works as intended.  
 
+```sh
+   npm run lint # for eslint
+   npm run format # for prettier formatting
+   npm run test:coverage # run test test and coverage
+```
+
 These tools help ensure that all commits adhere to the project’s coding standards and maintain high-quality, maintainable code.
 
 
@@ -143,3 +149,75 @@ Authify ensures users remain logged in across sessions using **AsyncStorage**:
 ---
 
 This demo section highlights the key authentication flows, form validation, and session management that make Authify a smooth and user-friendly React Native app.
+
+
+---
+
+## 🚀 Getting Started
+
+Follow these steps to set up **Authify** locally:
+
+## 1️⃣ Clone the Project
+
+```sh
+git clone https://github.com/muhazzib/Authify
+cd authify
+```
+
+## 2️⃣ Set Up React Native Environment
+> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+
+## 3️⃣ Install Node.js
+> **Note**: Ensure Node.js version 24 or higher:
+
+## 4️⃣ Install Dependencies
+
+```sh
+npm install
+# or
+yarn install
+```
+
+## 5️⃣ Run Metro (JavaScript Bundler)
+
+```sh
+# Using npm
+npm start
+
+# OR using Yarn
+yarn start
+```
+
+## 6️⃣ Build and Run the App
+For Android
+
+```sh
+# Using npm
+npm run android
+
+# OR using Yarn
+yarn android
+```
+
+For iOS
+
+Make sure CocoaPods dependencies are installed:
+
+
+```sh
+bundle install
+bundle exec pod install
+```
+
+Then build and run the app:
+
+
+```sh
+# Using npm
+npm run ios
+
+# OR using Yarn
+yarn ios
+```
+
+Now Authify should be running locally, ready for development and testing! 🎉
