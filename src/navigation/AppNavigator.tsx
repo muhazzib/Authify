@@ -6,24 +6,22 @@ import SignupScreen from '../screens/SignupScreen';
 import LoginScreen from '../screens/LoginScreen';
 import HomeScreen from '../screens/HomeScreen';
 import ErrorMessage from '../components/ErrorMessage';
-import {
-  getUserFromAsyncStorage,
-  getUsersFromAsyncStorage,
-} from '../utils/authStorage';
+import { useAsyncStorage } from '../hooks/useAsyncStorage';
 import { ActivityIndicator, View } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
   const { state, login, setUsers } = useContext(UserContext);
+  const { getUsers, getUser } = useAsyncStorage();
 
   const setInitialUsers = async () => {
-    const usersList = await getUsersFromAsyncStorage();
+    const usersList = await getUsers();
     setUsers(usersList);
   };
 
   const checkUser = async () => {
-    const loggedInUser = await getUserFromAsyncStorage();
+    const loggedInUser = await getUser();
     login(loggedInUser, true);
   };
 

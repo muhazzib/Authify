@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextInputProps, View } from 'react-native';
+import { TextInputProps, View } from 'react-native';
 import cardStyles from '../styles/Card.styles';
 
 interface CardProps {

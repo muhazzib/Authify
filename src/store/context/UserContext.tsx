@@ -1,9 +1,5 @@
 import React, { createContext, useReducer, ReactNode } from 'react';
-import {
-  removeUserFromAsyncStorage,
-  saveUserToAsyncStorage,
-  saveUsersToAsyncStorage,
-} from '../../utils/authStorage';
+import { useAsyncStorage } from '../../hooks/useAsyncStorage';
 import { User, UserContextType, UserPayload } from '../../types/interfaces';
 import reducer from '../reducer';
 import { INITIAL_STATE, REDUCER_TYPES } from '../../constants';
@@ -18,7 +14,8 @@ const UserContext = createContext<UserContextType>({
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-
+  const { saveUser, saveUsers, getUser, getUsers, removeUser } =
+    useAsyncStorage();
   const login = (user: UserPayload, initialLoad?: boolean) => {
     dispatch({ type: REDUCER_TYPES.SET_LOADING, payload: true });
     setTimeout(() => {
@@ -36,7 +33,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
           dispatch({ type: REDUCER_TYPES.SET_ERROR, payload: null });
         }, 3000);
       } else {
-        saveUserToAsyncStorage(existingUser).then(() => {
+        saveUser(existingUser).then(() => {
           dispatch({ type: REDUCER_TYPES.LOGIN, payload: existingUser });
           if (initialLoad) {
             dispatch({
@@ -62,8 +59,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
           dispatch({ type: REDUCER_TYPES.SET_ERROR, payload: null });
         }, 3000);
       } else {
-        saveUsersToAsyncStorage([...state.users, user]).then(() => {
-          saveUserToAsyncStorage(user).then(() => {
+        saveUsers([...state.users, user]).then(() => {
+          saveUser(user).then(() => {
             dispatch({ type: REDUCER_TYPES.SIGNUP, payload: user });
           });
         });
@@ -72,7 +69,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
-    removeUserFromAsyncStorage().then(() => {
+    removeUser().then(() => {
       dispatch({ type: REDUCER_TYPES.SET_LOADING, payload: true });
       setTimeout(() => {
         dispatch({ type: REDUCER_TYPES.LOGOUT });

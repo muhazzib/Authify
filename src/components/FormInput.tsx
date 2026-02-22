@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, KeyboardTypeOptions, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  KeyboardTypeOptions,
+  TouchableOpacity,
+} from 'react-native';
 import {
   Controller,
   Control,
@@ -41,9 +46,11 @@ const FormInput = <T extends FieldValues>({
         <View style={formInputStyles.container}>
           {isPassword && (
             <TouchableOpacity
-              onPress={() => setShowPassword((prev) => !prev)}
+              onPress={() => setShowPassword(prev => !prev)}
               style={formInputStyles.eyeIconContainer}
-              accessibilityLabel={showPassword ? 'Hide password' : 'Show password'}
+              accessibilityLabel={
+                showPassword ? 'Hide password' : 'Show password'
+              }
             >
               <MaterialIcons
                 name={showPassword ? 'visibility' : 'visibility-off'}
