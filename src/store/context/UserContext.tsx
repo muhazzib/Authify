@@ -6,19 +6,25 @@ import { INITIAL_STATE, LOADING_TYPES, REDUCER_TYPES } from '../../constants';
 
 const UserContext = createContext<UserContextType>({
   state: INITIAL_STATE,
-  login: () => {},
-  signup: () => {},
-  logout: () => {},
-  setUsers: () => {},
+  login: () => { },
+  signup: () => { },
+  logout: () => { },
+  setUsers: () => { },
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-  const { saveUser, saveUsers, removeUser } = useAsyncStorage();
+  const { saveUser, saveUsers, removeUser, getUser } = useAsyncStorage();
   const login = (user: UserPayload, initialLoad?: boolean) => {
     dispatch({ type: REDUCER_TYPES.SET_LOADING, payload: LOADING_TYPES.LOGIN });
     setTimeout(() => {
-      const existingUser = state.users.find(u => u.email === user?.email);
+      checkLoggedInStatus(user, state.users, initialLoad);
+    }, 1000);
+  };
+
+  const checkLoggedInStatus = (user: UserPayload, users: User[], initialLoad?: boolean) => {
+    
+    const existingUser = users.find(u => u.email === user?.email);
       if (!existingUser || existingUser.password !== user.password) {
         if (!initialLoad) {
           dispatch({
@@ -42,8 +48,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
           }
         });
       }
-    }, 1000);
-  };
+  }
 
   const signup = (user: User) => {
     dispatch({
@@ -86,8 +91,17 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const setUsers = (users: User[]) => {
+  const setUsers = async (users: User[]) => {
     dispatch({ type: REDUCER_TYPES.SET_USERS, payload: users });
+    if (users.length) {
+      const loggedInUser = await getUser();
+      checkLoggedInStatus(loggedInUser, users, true)
+    } else {
+      dispatch({
+        type: REDUCER_TYPES.SET_INITIAL_LOADING,
+        payload: false,
+      });
+    }
   };
 
   return (

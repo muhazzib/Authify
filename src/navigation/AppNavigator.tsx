@@ -12,28 +12,17 @@ import { ActivityIndicator, View } from 'react-native';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
-  const { state, login, setUsers } = useContext(UserContext);
-  const { getUsers, getUser } = useAsyncStorage();
+  const { state, setUsers } = useContext(UserContext);
+  const { getUsers } = useAsyncStorage();
 
   const setInitialUsers = async () => {
     const usersList = await getUsers();
     setUsers(usersList);
   };
 
-  const checkUser = async () => {
-    const loggedInUser = await getUser();
-    login(loggedInUser, true);
-  };
-
   useEffect(() => {
     setInitialUsers();
   }, []);
-
-  useEffect(() => {
-    if (state.users.length > 0) {
-      checkUser();
-    }
-  }, [state.users]);
 
   if (state.initialLoading) {
     return (
@@ -48,7 +37,6 @@ const AppNavigator = () => {
       </View>
     );
   }
-
   return (
     <>
       <NavigationContainer>
